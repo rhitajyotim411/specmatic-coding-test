@@ -1,5 +1,7 @@
 package com.store.controllers.dto.inbound;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.store.model.ProductTypes;
 
 import jakarta.validation.constraints.Max;
@@ -34,5 +36,8 @@ public class ProductsSaveReq {
     @Min(value = 1, message = "Inventory must be at least 1")
     @Max(value = 9999, message = "Inventory must be at most 9999")
     private Integer inventory;
+
+    @JsonSetter(nulls = Nulls.FAIL)
+    private Double cost;
 
 }

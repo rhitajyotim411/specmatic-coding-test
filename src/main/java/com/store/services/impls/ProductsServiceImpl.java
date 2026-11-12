@@ -2,6 +2,7 @@ package com.store.services.impls;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
@@ -37,7 +38,11 @@ public class ProductsServiceImpl implements IProductsService {
             currId,
             payload.getName(),
             payload.getType(),
-            payload.getInventory()
+            payload.getInventory(),
+            Objects.requireNonNullElse(
+                payload.getCost(),
+                0.0
+            )
         );
 
         productsStore.put(

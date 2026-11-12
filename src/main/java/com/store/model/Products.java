@@ -13,5 +13,6 @@ public class Products {
     private final String name;
     private final ProductTypes type;
     private final Integer inventory;
+    private final Double cost;
 
 }
