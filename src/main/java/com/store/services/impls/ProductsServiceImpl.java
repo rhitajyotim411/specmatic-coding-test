@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
@@ -18,12 +19,15 @@ import com.store.services.IProductsService;
 public class ProductsServiceImpl implements IProductsService {
 
     private final Map<Integer, Products> productsStore;
-    private int idGen;
+    // Concurrent saves need unique IDs.
+    private final AtomicInteger idGen;
 
     public ProductsServiceImpl() {
 
         productsStore = new ConcurrentHashMap<>();
-        idGen = 1;
+        idGen = new AtomicInteger(
+            1
+        );
 
     }
 
@@ -32,13 +36,14 @@ public class ProductsServiceImpl implements IProductsService {
         ProductsSaveReq payload
     ) {
 
-        int currId = idGen;
+        int currId = idGen.getAndIncrement();
 
         Products currProduct = new Products(
             currId,
             payload.getName(),
             payload.getType(),
             payload.getInventory(),
+            // An omitted cost is treated as zero.
             Objects.requireNonNullElse(
                 payload.getCost(),
                 0.0
@@ -49,8 +54,6 @@ public class ProductsServiceImpl implements IProductsService {
             currId,
             currProduct
         );
-
-        idGen += 1;
 
         return currId;
 

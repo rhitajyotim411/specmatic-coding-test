@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.store.model.ProductTypes;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -37,7 +38,9 @@ public class ProductsSaveReq {
     @Max(value = 9999, message = "Inventory must be at most 9999")
     private Integer inventory;
 
+    // Allow omitted cost to default, but reject an explicit JSON null.
     @JsonSetter(nulls = Nulls.FAIL)
+    @DecimalMin(value = "0.0", message = "Cost must be zero or greater")
     private Double cost;
 
 }

@@ -32,22 +32,17 @@ public class ProductsRestController {
         ProductsSaveReq payload
     ) {
 
-        try {
-            return ResponseEntity
-                .status(
-                    201
-                )
-                .body(
-                    new ProductsSaveResp(
-                        productsService.save(
-                            payload
-                        )
+        return ResponseEntity
+            .status(
+                201
+            )
+            .body(
+                new ProductsSaveResp(
+                    productsService.save(
+                        payload
                     )
-                );
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+                )
+            );
 
     }
 
@@ -57,18 +52,13 @@ public class ProductsRestController {
         ProductTypes type
     ) {
 
-        try {
-            return ResponseEntity.ok(
-                productsService.get(
-                    Optional.ofNullable(
-                        type
-                    )
+        return ResponseEntity.ok(
+            productsService.get(
+                Optional.ofNullable(
+                    type
                 )
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+            )
+        );
 
     }
 
