@@ -295,7 +295,7 @@
             <id>linux-tests</id>
             <activation>
                 <os>
-                    <family>unix</family>
+                    <family>Linux</family>
                 </os>
             </activation>
             <properties>
